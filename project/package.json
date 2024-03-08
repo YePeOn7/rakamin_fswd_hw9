@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon app.js",
-    "test": "nodemon app.js"
+    "db_auto_increment": "cd scripts; node alter_table.js"
   },
   "author": "",
   "license": "ISC",
