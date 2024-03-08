@@ -1,7 +1,8 @@
 ALTER TABLE IF EXISTS users
     ALTER COLUMN id SET NOT NULL,
     ALTER COLUMN id ADD GENERATED ALWAYS AS IDENTITY (INCREMENT 1),
-    ADD PRIMARY KEY (id);
+    ADD PRIMARY KEY (id),
+    ADD UNIQUE (email);
 
 SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
 
