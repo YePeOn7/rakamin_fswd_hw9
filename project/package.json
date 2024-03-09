@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon app.js",
+    "dev": "nodemon app.js",
     "init_db": "cd scripts; node init_db.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.1.1",
     "express": "^4.18.3",
+    "jsonwebtoken": "^9.0.2",
     "pg": "^8.11.3"
   }
 }
