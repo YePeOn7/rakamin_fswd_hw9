@@ -1,15 +1,27 @@
 const pool = require('../config/db_config.js');
 const router = require('express').Router();
+const tools = require("../etc/tools.js");
 
 const usersTable = "users";
 
-router.get("/", (req, res) => {
-    pool.query(`SELECT * FROM ${usersTable}`, (err, result) => {
+router.get("/", async (req, res) => {
+    const pagination = await tools.pagination(req.query, usersTable);
+
+    // console.log(pagination);
+
+    const query = `
+    SELECT * FROM ${usersTable}
+    ${pagination.query}`
+
+    pool.query(query, (err, result) => {
         if(err){
             res.json({message: "Internal Server Error"}).status(500);
         }
         else{
-            res.send(result.rows);
+            res.status(200).json({
+                data: result.rows,
+                pageInfo: pagination.pageInfo
+            });
         }
     });
 })

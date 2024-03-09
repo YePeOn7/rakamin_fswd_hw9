@@ -45,11 +45,9 @@ class AuthController{
                 throw {name: "invalid Credential"};
             }
             else{
-                const user = result.rows[0]
-                const match = bcrypt.comparePassword(password, user.password);
-                console.log("valid ---> ", match);
-
-                if(match){
+                const user = result.rows[0];
+                
+                if(bcrypt.comparePassword(password, user.password)){
                     const accessToken = jwt.generateToken({
                         id: user.id,
                         email: user.email,

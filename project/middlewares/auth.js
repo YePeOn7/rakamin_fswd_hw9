@@ -3,7 +3,7 @@ const pool = require("../config/db_config.js")
 
 async function authenticate(req, res, next){
     try{
-        console.log("From authenticate function");
+        // console.log("From authenticate function");
         if(req.headers.authorization){
             const accessToken = req.headers.authorization.split(" ")[1];
             // console.log(req.headers.authorization);
@@ -23,7 +23,7 @@ async function authenticate(req, res, next){
             const result = await pool.query(query, [user.id]);
     
     
-            console.log(result.rows);
+            // console.log(result.rows);
             if(result.rowCount !== 0) 
             {
                 const foundUser = result.rows[0];

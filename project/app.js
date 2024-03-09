@@ -2,6 +2,7 @@ const pool = require('./config/db_config.js');
 const route = require('./router/index.js');
 const express = require('express');
 const errorHandler = require("./middlewares/errorHandler.js");
+const morgan = require("morgan");
 
 const app = express();
 
@@ -10,6 +11,7 @@ app.get("/", (req, res) => {
     res.send("ok");
 });
 
+app.use(morgan("combined"));
 app.use(route);
 app.use(errorHandler);
 
