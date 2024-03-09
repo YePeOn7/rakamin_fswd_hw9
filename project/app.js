@@ -3,15 +3,18 @@ const route = require('./router/index.js');
 const express = require('express');
 const errorHandler = require("./middlewares/errorHandler.js");
 const morgan = require("morgan");
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocument = require('./swagger.json');
 
 const app = express();
 
 // Test Ping
 app.get("/", (req, res) => {
-    res.send("ok");
+    res.send("OK");
 });
 
 app.use(morgan("combined"));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(route);
 app.use(errorHandler);
 
