@@ -108,6 +108,939 @@
           }
         }
       }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "login an user",
+        "description": "login an user",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user email",
+            "example": "aaa@bbb.com"
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "schema": {
+              "type": "string"
+            },
+            "description": "User Password",
+            "example": 12345678
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/loginSuccessfull"
+          },
+          "401": {
+            "$ref": "#/components/responses/loginFail"
+          }
+        }
+      }
+    },
+    "/api/users/{userId}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get user by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userId",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/userListSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthenticated"
+          },
+          "404": {
+            "$ref": "#/components/responses/userListNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
+          }
+        }
+      }
+    },
+    "/api/users/": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List Users",
+        "description": "List Users",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "page number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "limit of content in a page"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/userListSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthenticated"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
+          }
+        }
+      },
+      "post": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List Users",
+        "description": "List Users",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user email",
+            "example": "aaa@mail.com",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "gender",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user gender",
+            "example": "Male",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user password",
+            "example": "12345678",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "role",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user role",
+            "example": "admin",
+            "required": true
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/userAddSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/userAddMissingParameter"
+          },
+          "404": {
+            "$ref": "#/components/responses/userListNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
+          }
+        }
+      },
+      "put": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List Users",
+        "description": "List Users",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "user id",
+            "example": 101,
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "email",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user email",
+            "example": "aaa@mail.com",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "gender",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user gender",
+            "example": "Male",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "password",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user password",
+            "example": "12345678",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "role",
+            "schema": {
+              "type": "string"
+            },
+            "description": "user role",
+            "example": "admin",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/userUpdateSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/userAddMissingParameter"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "user id",
+            "example": 101,
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List Users",
+        "description": "List Users",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/userDeleteSuccess"
+          },
+          "404": {
+            "$ref": "#/components/responses/userDeleteFail"
+          }
+        }
+      }
+    },
+    "/api/movies/{id}": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "Get user by ID",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/movieListSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthenticated"
+          },
+          "404": {
+            "$ref": "#/components/responses/movieListNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
+          }
+        }
+      }
+    },
+    "/api/movies/": {
+      "get": {
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "page number"
+          },
+          {
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "limit of content in a page"
+          }
+        ],
+        "summary": "List Users",
+        "description": "List Users",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/movieListSuccess"
+          },
+          "401": {
+            "$ref": "#/components/responses/unauthenticated"
+          },
+          "404": {
+            "$ref": "#/components/responses/movieListNotFound"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
+          }
+        }
+      },
+      "post": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "title",
+            "schema": {
+              "type": "string"
+            },
+            "description": "movie title",
+            "example": "Doraemon",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "genres",
+            "schema": {
+              "type": "string"
+            },
+            "description": "movie genres",
+            "example": "Anime",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Released Year",
+            "example": 2000,
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List Users",
+        "description": "List Users",
+        "responses": {
+          "201": {
+            "$ref": "#/components/responses/movieAddSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/movieAddMissingParameter"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
+          }
+        }
+      },
+      "put": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "movie id",
+            "example": 101,
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "title",
+            "schema": {
+              "type": "string"
+            },
+            "description": "movie title",
+            "example": "Naruto",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "genres",
+            "schema": {
+              "type": "string"
+            },
+            "description": "movie genres",
+            "example": "Anime",
+            "required": true
+          },
+          {
+            "in": "query",
+            "name": "year",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Released Year",
+            "example": 2000,
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List Users",
+        "description": "List Users",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/movieUpdateSuccess"
+          },
+          "400": {
+            "$ref": "#/components/responses/movieAddMissingParameter"
+          },
+          "500": {
+            "$ref": "#/components/responses/internalServerError"
+          }
+        }
+      },
+      "delete": {
+        "parameters": [
+          {
+            "in": "query",
+            "name": "id",
+            "schema": {
+              "type": "integer"
+            },
+            "description": "movie id",
+            "example": 101,
+            "required": true
+          }
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "summary": "List Users",
+        "description": "List Users",
+        "responses": {
+          "200": {
+            "$ref": "#/components/responses/movieDeleteSuccess"
+          },
+          "404": {
+            "$ref": "#/components/responses/movieDeleteFail"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "responses": {
+      "loginSuccessfull": {
+        "description": "User login successfully",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "user email",
+                  "example": "Login succesfully"
+                },
+                "accessToken": {
+                  "type": "string",
+                  "description": "User gender",
+                  "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAxLC"
+                }
+              }
+            }
+          }
+        }
+      },
+      "loginFail": {
+        "description": "Unauthorized",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "description": "message",
+                  "example": "Invalid Credential"
+                }
+              }
+            }
+          }
+        }
+      },
+      "userListSuccess": {
+        "description": "A User object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 1,
+                        "description": "user id"
+                      },
+                      "email": {
+                        "type": "string",
+                        "example": "aaa@mail.com",
+                        "description": "user email"
+                      },
+                      "gender": {
+                        "type": "string",
+                        "example": "Male",
+                        "description": "user gender"
+                      },
+                      "password": {
+                        "type": "string",
+                        "example": "fads87f57c8awde65f8fg6asdfgdfasd578*&%*%*CSDsfgfd",
+                        "description": "user hashed password"
+                      },
+                      "role": {
+                        "type": "string",
+                        "example": "admin",
+                        "description": "user role"
+                      }
+                    },
+                    "example": [
+                      {
+                        "id": 1,
+                        "email": "aaa@aaa.com",
+                        "gender": "Male",
+                        "password": "asdfabdowfnhcoewilojfnmcoalwekfvwef587658%^&",
+                        "role": "admin"
+                      },
+                      {
+                        "id": 2,
+                        "email": "bbb@bbb.com",
+                        "gender": "Female",
+                        "password": "lkhaseuidfjhbnaiwhjef*&%86*^*&678%^&",
+                        "role": "Architect"
+                      }
+                    ]
+                  }
+                },
+                "pageInfo": {
+                  "type": "object",
+                  "properties": {
+                    "currentPage": {
+                      "type": "integer",
+                      "example": 2,
+                      "description": "current page"
+                    },
+                    "nextPage": {
+                      "type": "integer",
+                      "example": 3,
+                      "description": "next page"
+                    },
+                    "previousPage": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "previous page"
+                    },
+                    "totalPage": {
+                      "type": "integer",
+                      "example": 10,
+                      "description": "total page"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "userListNotFound": {
+        "description": "The Movie List is not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "There is no data with id: 101"
+                }
+              }
+            }
+          }
+        }
+      },
+      "userAddSuccess": {
+        "description": "Success to Create a User",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User Created Successfully"
+                }
+              }
+            }
+          }
+        }
+      },
+      "userAddMissingParameter": {
+        "description": "Fail to add user because lack of supplied parameter(s)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Missing parameter(s)"
+                }
+              }
+            }
+          }
+        }
+      },
+      "userUpdateSuccess": {
+        "description": "Success to Update a User",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "User Update Successfully"
+                }
+              }
+            }
+          }
+        }
+      },
+      "userDeleteSuccess": {
+        "description": "Success to Delete a User",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Data with id: 100 has been deleted succesfully"
+                }
+              }
+            }
+          }
+        }
+      },
+      "userDeleteFail": {
+        "description": "Fail to Delete a User",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "There is no data with id: 100"
+                }
+              }
+            }
+          }
+        }
+      },
+      "movieListSuccess": {
+        "description": "Listing Movies",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer",
+                        "example": 1,
+                        "description": "user id"
+                      },
+                      "title": {
+                        "type": "string",
+                        "example": "Doraemon",
+                        "description": "Movie title"
+                      },
+                      "genres": {
+                        "type": "string",
+                        "example": "Anime",
+                        "description": "Movie Genre"
+                      },
+                      "year": {
+                        "type": "integer",
+                        "example": 2000,
+                        "description": "Movie release Year"
+                      }
+                    },
+                    "example": [
+                      {
+                        "id": 1,
+                        "title": "Doraemon",
+                        "genres": "Anime",
+                        "year": 2000
+                      },
+                      {
+                        "id": 2,
+                        "title": "Kungfu Hustle",
+                        "genres": "Comedy|Action",
+                        "year": 2006
+                      }
+                    ]
+                  }
+                },
+                "pageInfo": {
+                  "type": "object",
+                  "properties": {
+                    "currentPage": {
+                      "type": "integer",
+                      "example": 2,
+                      "description": "current page"
+                    },
+                    "nextPage": {
+                      "type": "integer",
+                      "example": 3,
+                      "description": "next page"
+                    },
+                    "previousPage": {
+                      "type": "integer",
+                      "example": 1,
+                      "description": "previous page"
+                    },
+                    "totalPage": {
+                      "type": "integer",
+                      "example": 10,
+                      "description": "total page"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "movieListNotFound": {
+        "description": "The Movie List is not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "There is no data with id: 101"
+                }
+              }
+            }
+          }
+        }
+      },
+      "movieAddSuccess": {
+        "description": "Success to Add a movie",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Data has been added succesfully"
+                }
+              }
+            }
+          }
+        }
+      },
+      "movieAddMissingParameter": {
+        "description": "Fail to add movie because lack of supplied parameter(s)",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Missing parameter(s)"
+                }
+              }
+            }
+          }
+        }
+      },
+      "movieUpdateSuccess": {
+        "description": "Success to Update a Movie",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Data has been updated succesfully"
+                }
+              }
+            }
+          }
+        }
+      },
+      "movieDeleteSuccess": {
+        "description": "Success to Delete a Movie",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Data with id: 100 has been deleted succesfully"
+                }
+              }
+            }
+          }
+        }
+      },
+      "movieDeleteFail": {
+        "description": "Fail to Delete a movie",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "There is no data with id: 100"
+                }
+              }
+            }
+          }
+        }
+      },
+      "unauthenticated": {
+        "description": "Unauthenticated",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Unauthenticated"
+                }
+              }
+            }
+          }
+        }
+      },
+      "internalServerError": {
+        "description": "internal server error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string",
+                  "example": "Internal Server Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
     }
   }
 }
