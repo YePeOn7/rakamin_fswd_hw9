@@ -420,18 +420,18 @@
 				"method": "DELETE",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/api/users?id=100",
+					"raw": "{{url}}/api/movies?id=101",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
 						"api",
-						"users"
+						"movies"
 					],
 					"query": [
 						{
 							"key": "id",
-							"value": "100"
+							"value": "101"
 						}
 					]
 				}
