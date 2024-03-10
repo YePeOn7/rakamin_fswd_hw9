@@ -1,6 +1,7 @@
 const pool = require('../config/db_config.js');
 const router = require('express').Router();
 const tools = require("../etc/tools.js");
+const bcrypt = require("../lib/bcrypt.js");
 
 const usersTable = "users";
 
@@ -51,9 +52,11 @@ router.post("/", (req, res) => {
         return;
     }
 
+    const hashedPassword = bcrypt.hashPassword(password);
+
     pool.query(`
         INSERT INTO ${usersTable}(email, gender, password, role)
-        VALUES ($1, $2, $3, $4);`, [email, gender, password, role],
+        VALUES ($1, $2, $3, $4);`, [email, gender, hashedPassword, role],
         (err, result) => {
         if(err){
             if(err.code === '23505'){
@@ -81,6 +84,8 @@ router.put("/", (req, res) => {
         return;
     }
     
+    const hashedPassword = bcrypt.hashPassword(password);
+    
     pool.query(`SELECT * FROM ${usersTable} WHERE id=${id}`, (err,result) => {
         if(err){
             res.status(500).json({message: "Internal server error"});
@@ -93,7 +98,7 @@ router.put("/", (req, res) => {
                 UPDATE ${usersTable}
                 SET email=$1, gender=$2, password=$3, role=$4
                 WHERE id = $5;`, 
-                [email, gender, password, role, id],
+                [email, gender, hashedPassword, role, id],
                 (err, result) => {
                 if(err){
                     res.status(500).json({message: "Internal Server Error", err: err});
