@@ -19,10 +19,13 @@ Otherwise, you can use pgadmin to create a **movies_db** database and restore th
 ![image](https://github.com/YePeOn7/rakamin_fswd_hw9/assets/12985183/23781986-8f36-436c-b8bd-904d20605e9f)
 
 ### Init Project
-From root of the repo
+From the root of the repo
 ```bash
 cd project
 npm install
+
+# need to apply auto-increment and change datatype on the table, please use the following command
+db-migrate up
 ```
 ## Run the Project
 From the root of the repo
