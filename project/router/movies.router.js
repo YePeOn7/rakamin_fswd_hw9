@@ -1,6 +1,7 @@
 const pool = require('../config/db_config.js');
 const router = require('express').Router();
 const tools = require("../etc/tools.js");
+const auth = require("../middlewares/auth.js");
 
 const moviesTable = "movies"
 
@@ -38,7 +39,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {
+router.post("/", auth.authorization, (req, res) => {
     const title = req.query.title;
     const genres = req.query.genres;
     const year = req.query.year;
@@ -61,7 +62,7 @@ router.post("/", (req, res) => {
     })
 });
 
-router.put("/", (req, res) => {
+router.put("/", auth.authorization, (req, res) => {
     const title = req.query.title;
     const genres = req.query.genres;
     const year = req.query.year;
@@ -97,7 +98,7 @@ router.put("/", (req, res) => {
 
 });
 
-router.delete("/", (req, res) => {
+router.delete("/", auth.authorization, (req, res) => {
     const id = req.query.id;
 
     pool.query(`SELECT * FROM ${moviesTable} WHERE id=$1`, [id], (err, result) =>{

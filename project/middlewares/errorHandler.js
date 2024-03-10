@@ -6,6 +6,9 @@ function errorHandler(err, req, res, next){
     else if(err.name == "Unauthenticated"){
         res.status(401).json({message: "Unauthenticated"});
     }
+    else if(err.name == "Unauthorized"){
+        res.status(403).json({message: "Unauthorized"});
+    }
     else if(err.name == "Invalid Credential"){
         res.status(401).json({message: "Invalid Credential"});
     }

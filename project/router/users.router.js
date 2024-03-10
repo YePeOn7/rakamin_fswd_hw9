@@ -2,6 +2,7 @@ const pool = require('../config/db_config.js');
 const router = require('express').Router();
 const tools = require("../etc/tools.js");
 const bcrypt = require("../lib/bcrypt.js");
+const auth = require("../middlewares/auth.js");
 
 const usersTable = "users";
 
@@ -41,7 +42,7 @@ router.get("/:id", (req, res) => {
     });
 });
 
-router.post("/", (req, res) => {  
+router.post("/", auth.authorization,(req, res) => {  
     const email = req.query.email;
     const gender = req.query.gender;
     const password = req.query.password;
@@ -72,7 +73,7 @@ router.post("/", (req, res) => {
     });
 });
 
-router.put("/", (req, res) => {
+router.put("/", auth.authorization, (req, res) => {
     const id = req.query.id;
     const email = req.query.email;
     const gender = req.query.gender;
@@ -112,7 +113,7 @@ router.put("/", (req, res) => {
 
 });
 
-router.delete("/", (req, res) => {
+router.delete("/", auth.authorization, (req, res) => {
     const id = req.query.id;
 
     pool.query(`SELECT * FROM ${usersTable} WHERE id=$1`, [id], (err, result) =>{

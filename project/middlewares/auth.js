@@ -29,7 +29,7 @@ async function authenticate(req, res, next){
                 const foundUser = result.rows[0];
     
                 // need to be used when limit access  for a user base on the role
-                req.loggerUser = {
+                req.loggedUser = {
                     id: foundUser.id,
                     email: foundUser.email,
                     role: foundUser.role
@@ -50,4 +50,22 @@ async function authenticate(req, res, next){
     }
 }
 
-module.exports = {authenticate}
+async function authorization(req, res, next){
+    console.log(req.loggedUser);
+    try{
+        if(req.loggedUser.role === "admin") next();
+        else 
+        {
+            console.log("Here!!!!!!");
+            throw {name: "Unauthorized"};
+        }
+    }
+    catch(err){
+        next(err);
+    }
+}
+
+module.exports = {
+    authenticate,
+    authorization
+};
