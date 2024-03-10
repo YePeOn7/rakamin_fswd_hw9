@@ -1,0 +1,433 @@
+openapi: 3.0.3
+info:
+  title: Week 9 HW API
+  description: A simple API with one endpoint
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3000
+    description: api server
+
+paths:
+  /:
+    get:
+      summary: Ping Test
+      description: Returns Server Status
+      responses:
+        '200':
+          description: Successful response
+          content:
+            text/html:
+              schema:
+                type: string
+              example: OK
+  
+  /api/auth/register:
+    post:
+      summary: register an user
+      description: register an user
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          description: user email
+          example: aaa@bbb.com
+        - in: query
+          name: gender
+          schema:
+            type: string
+          description: user gender
+          example: Male
+        - in: query
+          name: password
+          schema:
+            type: string
+          description: User Password
+          example: 12345678
+        - in: query
+          name: role
+          schema:
+            type: string
+          description: User Role
+          example: admin
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  email:
+                    type: string
+                    description: user email
+                    example: aaa@bbb.com
+                  gender:
+                    type: string
+                    description: User gender
+                    example: Male
+                  password:
+                    type: string
+                    description: User password
+                    example: afsdfawefdsfawefdcfa6%&(8)
+                  role:
+                    type: string
+                    description: User role
+                    example: admin
+  
+  /api/auth/login:
+    post:
+      summary: login an user
+      description: login an user
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          description: user email
+          example: aaa@bbb.com
+        - in: query
+          name: gender
+          schema:
+            type: string
+          description: user gender
+          example: Male
+        - in: query
+          name: password
+          schema:
+            type: string
+          description: User Password
+          example: 12345678
+        - in: query
+          name: role
+          schema:
+            type: string
+          description: User Role
+          example: admin
+      responses:
+        '200':
+          $ref: '#/components/responses/loginSuccessfull'
+        '401':
+          $ref: '#/components/responses/loginFail'
+  
+  /api/users/:
+    get:
+      summary: List Users
+      description: List Users
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: page number
+        - in: query
+          name: limit
+          schema:
+            type: integer
+          description: limit of content in a page
+      responses:
+        "200":
+          $ref: '#/components/responses/userListSuccess'
+        "401":
+          $ref: '#/components/responses/unauthenticated'
+        "500":
+          $ref: '#/components/responses/internalServerError'
+    post:
+      summary: List Users
+      description: List Users
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          description: user email
+          example: aaa@mail.com
+          required: true
+        - in: query
+          name: gender
+          schema:
+            type: string
+          description: user gender
+          example: Male
+          required: true
+        - in: query
+          name: password
+          schema:
+            type: string
+          description: user password
+          example: "12345678"
+          required: true
+        - in: query
+          name: role
+          schema:
+            type: string
+          description: user role
+          example: "admin"
+          required: true
+      responses:
+        "201":
+          $ref: '#/components/responses/userAddSuccess' 
+        "400":
+          $ref: '#/components/responses/userAddMissingParameter' 
+        "500":
+          $ref: '#/components/responses/internalServerError'
+    put:
+      summary: List Users
+      description: List Users
+      parameters:
+        - in: query
+          name: id
+          schema:
+            type: integer
+          description: user id
+          example: 101
+          required: true
+        - in: query
+          name: email
+          schema:
+            type: string
+          description: user email
+          example: aaa@mail.com
+          required: true
+        - in: query
+          name: gender
+          schema:
+            type: string
+          description: user gender
+          example: Male
+          required: true
+        - in: query
+          name: password
+          schema:
+            type: string
+          description: user password
+          example: "12345678"
+          required: true
+        - in: query
+          name: role
+          schema:
+            type: string
+          description: user role
+          example: "admin"
+          required: true
+      responses:
+        "200":
+          $ref: '#/components/responses/userUpdateSuccess' 
+        "400":
+          $ref: '#/components/responses/userAddMissingParameter' 
+        "500":
+          $ref: '#/components/responses/internalServerError'
+    delete:
+      summary: List Users
+      description: List Users
+      responses:
+        "200":
+          description: Success
+  
+  /users/{userId}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation
+  
+  /api/movies/:
+    get:
+      summary: List Users
+      description: List Users
+      responses:
+        "200":
+          description: Success
+    post:
+      summary: List Users
+      description: List Users
+      responses:
+        "200":
+          description: Success  
+    put:
+      summary: List Users
+      description: List Users
+      responses:
+        "200":
+          description: Success
+    delete:
+      summary: List Users
+      description: List Users
+      responses:
+        "200":
+          description: Success
+  
+  /api/movies/{userId}:
+    get:
+      summary: Get user by ID
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Successful operation  
+          
+components:
+  responses:
+    loginSuccessfull:
+      description: User login successfully
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: user email
+                example: "Login succesfully"
+              accessToken:
+                type: string
+                description: User gender
+                example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTAxLC
+          
+    loginFail:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: message
+                example: Invalid Credential
+                
+    userListSuccess:
+      description: A User object
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              data:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      example: 1
+                      description: user id
+                    email:
+                      type: string
+                      example: aaa@mail.com
+                      description: user email
+                    gender:
+                      type: string
+                      example: Male
+                      description: user gender
+                    password:
+                      type: string
+                      example: fads87f57c8awde65f8fg6asdfgdfasd578*&%*%*CSDsfgfd
+                      description: user hashed password
+                    role:
+                      type: string
+                      example: admin
+                      description: user role
+                  example:
+                    - id: 1
+                      email: aaa@aaa.com
+                      gender: Male
+                      password: asdfabdowfnhcoewilojfnmcoalwekfvwef587658%^&
+                      role: admin
+                    - id: 2
+                      email: bbb@bbb.com
+                      gender: Female
+                      password: lkhaseuidfjhbnaiwhjef*&%86*^*&678%^&
+                      role: Architect
+              pageInfo:
+                type: object
+                properties:
+                  currentPage:
+                    type: integer
+                    example: 2
+                    description: current page
+                  nextPage:
+                    type: integer
+                    example: 3
+                    description: next page
+                  previousPage:
+                    type: integer
+                    example: 2
+                    description: previous page
+                  totalPage:
+                    type: integer
+                    example: 10
+                    description: total page
+                
+    userAddSuccess:
+      description: Success to Create a User
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "User Created Successfully"
+    
+    userAddMissingParameter:
+      description: Fail to add user because lack of supplied parameter(s)
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Missing parameter(s)"
+    
+    userUpdateSuccess:
+      description: Success to Update a User
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "User Update Successfully"
+    
+    unauthenticated:
+      description: Unauthenticated
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Unauthenticated"
+    
+    internalServerError:
+      description: internal server error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: "Internal Server Error"
+
+          
+          
+          
+          
+          
+          
